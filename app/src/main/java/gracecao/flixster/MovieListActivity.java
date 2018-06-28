@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
+import gracecao.flixster.models.Config;
 import gracecao.flixster.models.Movie;
 
 public class MovieListActivity extends AppCompatActivity {
@@ -31,16 +32,18 @@ public class MovieListActivity extends AppCompatActivity {
 
     //instance fields
     AsyncHttpClient client;
-    //the base url for loading images
-    String imageBaseUrl;
-    //the poster size to use when fetching images, part of the url
-    String posterSize;
+//    //the base url for loading images
+//    String imageBaseUrl;
+//    //the poster size to use when fetching images, part of the url
+//    String posterSize;
     //the list of currently playing movies
     ArrayList<Movie> movies;
     //the recycler view
     RecyclerView rvMovies;
     //the adapter wired to the recycler view
     MovieAdapter adapter;
+    //image configuration
+    Config config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,16 +111,19 @@ public class MovieListActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    JSONObject images = response.getJSONObject("images");
-                    //get the image base url
-                    imageBaseUrl = images.getString("secure_base_url");
-                    //get the poster size
-                    JSONArray posterSizeOptions = images.getJSONArray("poster_sizes");
-                    //use the option at index 3 or w342 as a fallback (declaring a default)
-                    posterSize = posterSizeOptions.optString(3, "w342");
+                    config = new Config(response);
+//                    JSONObject images = response.getJSONObject("images");
+//                    //get the image base url
+//                    imageBaseUrl = images.getString("secure_base_url");
+//                    //get the poster size
+//                    JSONArray posterSizeOptions = images.getJSONArray("poster_sizes");
+//                    //use the option at index 3 or w342 as a fallback (declaring a default)
+//                    posterSize = posterSizeOptions.optString(3, "w342");
                     Log.i(TAG, String.format(
                             "Loaded configuration with imageBaseUrl %s and posterSize %s",
-                            imageBaseUrl, posterSize));
+                            config.getImageBaseUrl(), config.getPosterSize()));
+                    //pass config to adapter
+                    adapter.setConfig(config);
                     //get the now playing movie list
                     getNowPlaying();
                 } catch (JSONException e) {
