@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import gracecao.flixster.models.Config;
 import gracecao.flixster.models.Movie;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     //list of movies
@@ -61,7 +62,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         //build url for poster image
         String imageUrl = config.getImageUrl(config.getPosterSize(), movie.getPosterPath());
         //load image using glide
-        Glide.with(context).load(imageUrl).placeholder(R.drawable.flicks_movie_placeholder)
+        Glide.with(context).load(imageUrl).
+                bitmapTransform(new RoundedCornersTransformation(context, 15, 0)).
+                placeholder(R.drawable.flicks_movie_placeholder)
                 .error(R.drawable.flicks_movie_placeholder).into(holder.ivPosterImage);
 
     }
