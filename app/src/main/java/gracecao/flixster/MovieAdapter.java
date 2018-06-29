@@ -104,21 +104,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         @Nullable @BindView(R.id.ivBackdropImage) ImageView getIvBackdropImage;
         @BindView(R.id.tvTitle) TextView tvTitle;
         @BindView(R.id.tvOverview) TextView tvOverview;
-//        //track view objects
-//        ImageView ivPosterImage;
-//        ImageView ivBackdropImage;
-//        TextView tvTitle;
-//        TextView tvOverview;
         public ViewHolder (@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
-//            //lookup view objects by id
-//            ivPosterImage = (ImageView) itemView.findViewById(R.id.ivPosterImage);
-//            ivBackdropImage = (ImageView) itemView.findViewById(R.id.ivBackdropImage);
-//            tvOverview = (TextView) itemView.findViewById(R.id.tvOverview);
-//            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
-
         }
 
         //when the user clicks on a row, show MovieDetailsActivity for the selected movie

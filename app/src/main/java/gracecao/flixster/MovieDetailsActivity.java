@@ -1,6 +1,9 @@
 package gracecao.flixster;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -63,6 +66,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
         //vote average from 0-10 (convert to 0-5 scale by dividing by 2)
         float voteAverage = movie.getVoteAverage().floatValue();
         rbVoteAverage.setRating(voteAverage = voteAverage > 0 ? voteAverage / 2.0f : voteAverage);
+        RatingBar ratingBar = (RatingBar) findViewById(R.id.rbVoteAverage);
+        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
     }
 
     //get the list of currently playing movies
@@ -82,7 +88,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     //iterate through result set and create Movie objects
                     for (int i = 0; i < results.length(); i++) {
                         JSONObject jsonObject = results.getJSONObject(i);
-
                         key = jsonObject.getString("key");
                     }
                     Log.i(TAG, String.format("Loaded %s movies", results.length()));
@@ -97,7 +102,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     public void onTrailerClick(View view) {
             //create intent for the new activity
             Intent intent = new Intent(this, MovieTrailerActivity.class);
-            //serialize the movie using parceler
             intent.putExtra("Movie Key",key);
             //show the activity
             startActivity(intent);

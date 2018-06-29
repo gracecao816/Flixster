@@ -31,7 +31,7 @@
 
     <RatingBar
         android:id="@+id/rbVoteAverage"
-        style="@style/Widget.AppCompat.RatingBar.Small"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -49,5 +49,5 @@
         android:adjustViewBounds="true"
         android:onClick="onTrailerClick"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/flicks_backdrop_placeholder" />
+        app:srcCompat="@drawable/youtube_logo" />
 </RelativeLayout>
