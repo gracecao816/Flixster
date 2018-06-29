@@ -32,6 +32,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     TextView tvOverview;
     RatingBar rbVoteAverage;
     String key;
+    String url;
 
     //instance fields
     AsyncHttpClient client;
@@ -69,12 +70,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
         RatingBar ratingBar = (RatingBar) findViewById(R.id.rbVoteAverage);
         LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+        getYoutubeTrailer();
     }
 
     //get the list of currently playing movies
     private void getYoutubeTrailer() {
         //create the url
-        String url = API_BASE_URL + "/movie/" + movie.getId() + "/videos";
+        url = API_BASE_URL + "/movie/" + movie.getId() + "/videos";
         //set the request parameters
         RequestParams params = new RequestParams();
         params.put(API_KEY_PARAM, getString(R.string.api_key)); //API key, always required
@@ -102,7 +104,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     public void onTrailerClick(View view) {
             //create intent for the new activity
             Intent intent = new Intent(this, MovieTrailerActivity.class);
-            intent.putExtra("Movie Key",key);
+            intent.putExtra("Movie Key", key);
             //show the activity
             startActivity(intent);
         }

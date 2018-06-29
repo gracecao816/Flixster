@@ -108,13 +108,6 @@ public class MovieListActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     config = new Config(response);
-//                    JSONObject images = response.getJSONObject("images");
-//                    //get the image base url
-//                    imageBaseUrl = images.getString("secure_base_url");
-//                    //get the poster size
-//                    JSONArray posterSizeOptions = images.getJSONArray("poster_sizes");
-//                    //use the option at index 3 or w342 as a fallback (declaring a default)
-//                    posterSize = posterSizeOptions.optString(3, "w342");
                     Log.i(TAG, String.format(
                             "Loaded configuration with imageBaseUrl %s and posterSize %s",
                             config.getImageBaseUrl(), config.getPosterSize()));
