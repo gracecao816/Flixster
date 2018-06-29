@@ -1,8 +1,10 @@
 package gracecao.flixster;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +14,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import gracecao.flixster.models.Config;
 import gracecao.flixster.models.Movie;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
@@ -75,7 +81,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         }
         //get the correct placeholder and imageview for the current orientation
         int placeholderId = isPortrait ? R.drawable.flicks_movie_placeholder : R.drawable.flicks_backdrop_placeholder;
-        ImageView imageView = isPortrait ? holder.ivPosterImage : holder.ivBackdropImage;
+        ImageView imageView = isPortrait ? holder.ivPosterImage : holder.getIvBackdropImage;
         //load image using glide
         Glide.with(context)
                 .load(imageUrl)
@@ -93,20 +99,44 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     }
 
     //create the viewholder as a static inner class
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        //track view objects
-        ImageView ivPosterImage;
-        ImageView ivBackdropImage;
-        TextView tvTitle;
-        TextView tvOverview;
-        public ViewHolder(@NonNull View itemView) {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        @Nullable @BindView(R.id.ivPosterImage) ImageView ivPosterImage;
+        @Nullable @BindView(R.id.ivBackdropImage) ImageView getIvBackdropImage;
+        @BindView(R.id.tvTitle) TextView tvTitle;
+        @BindView(R.id.tvOverview) TextView tvOverview;
+//        //track view objects
+//        ImageView ivPosterImage;
+//        ImageView ivBackdropImage;
+//        TextView tvTitle;
+//        TextView tvOverview;
+        public ViewHolder (@NonNull View itemView) {
             super(itemView);
-            //lookup view objects by id
-            ivPosterImage = (ImageView) itemView.findViewById(R.id.ivPosterImage);
-            ivBackdropImage = (ImageView) itemView.findViewById(R.id.ivBackdropImage);
-            tvOverview = (TextView) itemView.findViewById(R.id.tvOverview);
-            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+            ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
+//            //lookup view objects by id
+//            ivPosterImage = (ImageView) itemView.findViewById(R.id.ivPosterImage);
+//            ivBackdropImage = (ImageView) itemView.findViewById(R.id.ivBackdropImage);
+//            tvOverview = (TextView) itemView.findViewById(R.id.tvOverview);
+//            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
 
+        }
+
+        //when the user clicks on a row, show MovieDetailsActivity for the selected movie
+        @Override
+        public void onClick(View view) {
+            //gets item position
+            int position = getAdapterPosition();
+            //make sure the position is valid/actually exists in the view
+            if (position != RecyclerView.NO_POSITION) {
+                //get the movie at the position
+                Movie movie = movies.get(position);
+                //create intent for the new activity
+                Intent intent = new Intent(context, MovieDetailsActivity.class);
+                //serialize the movie using parceler
+                intent.putExtra(Movie.class.getSimpleName(), Parcels.wrap(movie));
+                //show the activity
+                context.startActivity(intent);
+            }
         }
     }
 
