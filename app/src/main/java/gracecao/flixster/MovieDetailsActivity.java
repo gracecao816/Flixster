@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -31,8 +33,15 @@ public class MovieDetailsActivity extends AppCompatActivity {
     TextView tvTitle;
     TextView tvOverview;
     RatingBar rbVoteAverage;
+
+    private Button btnBuyTickets;
+    //url for AMC website
+    public final static String AMC_URL = "https://www.amctheatres.com/";
+
+    //strings for the key and url to access
     String key;
     String url;
+
 
     //instance fields
     AsyncHttpClient client;
@@ -70,9 +79,21 @@ public class MovieDetailsActivity extends AppCompatActivity {
         RatingBar ratingBar = (RatingBar) findViewById(R.id.rbVoteAverage);
         LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+
+        btnBuyTickets = (Button) findViewById(R.id.btnBuyTickets);
+        btnBuyTickets.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                goToUrlAmc(AMC_URL);
+            }
+        });
         getYoutubeTrailer();
     }
 
+    public void goToUrlAmc(String url) {
+        Uri uriUrl = Uri.parse(url);
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+        startActivity(launchBrowser);
+    }
     //get the list of currently playing movies
     private void getYoutubeTrailer() {
         //create the url
@@ -100,13 +121,14 @@ public class MovieDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
     //when the user clicks on an image, take the user to a YouTube trailer
     public void onTrailerClick(View view) {
-            //create intent for the new activity
-            Intent intent = new Intent(this, MovieTrailerActivity.class);
-            intent.putExtra("Movie Key", key);
-            //show the activity
-            startActivity(intent);
-        }
+        //create intent for the new activity
+        Intent intent = new Intent(this, MovieTrailerActivity.class);
+        intent.putExtra("Movie Key", key);
+        //show the activity
+        startActivity(intent);
+    }
 
 }

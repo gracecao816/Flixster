@@ -27,8 +27,9 @@ public class Config {
 
     //helper methods for creating urls
     public String getImageUrl(String size, String path) {
-        return String.format("%s%s%s", imageBaseUrl, size, path ); //concatenate all three
+        return String.format("%s%s%s", imageBaseUrl, size, path); //concatenate all three
     }
+
     public String getImageBaseUrl() {
         return imageBaseUrl;
     }

@@ -60,6 +60,7 @@ public class MovieListActivity extends AppCompatActivity {
         //get the configuration on app creation
         getConfiguration();
     }
+
     //get the list of currently playing movies
     private void getNowPlaying() {
         //create the url
@@ -119,12 +120,14 @@ public class MovieListActivity extends AppCompatActivity {
                     logError("Failed parsing configuration", e, true);
                 }
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 logError("Failed getting configuration", throwable, true);
             }
         });
     }
+
     //handle errors, log and alert user
     private void logError(String message, Throwable error, boolean alertUser) {
         //log for error

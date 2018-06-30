@@ -15,7 +15,8 @@ public class Movie {
     Integer id;
 
     //no-arg, empty constructor required for Parceler
-    public Movie() {}
+    public Movie() {
+    }
 
     //initialize from JSON data with constructor
     public Movie(JSONObject object) throws JSONException {

@@ -23,21 +23,21 @@ public class MovieTrailerActivity extends YouTubeBaseActivity {
         //initialize with API key stored in secrets.xml
         playerView.initialize(getString(R.string.youtube_api_key),
                 new YouTubePlayer.OnInitializedListener() {
-        @Override
-            public void onInitializationSuccess(YouTubePlayer.Provider provider,
-                                                YouTubePlayer youtubePLayer,
-                                                boolean b) {
-            youtubePLayer.cueVideo(videoId);
-        }
+                    @Override
+                    public void onInitializationSuccess(YouTubePlayer.Provider provider,
+                                                        YouTubePlayer youtubePLayer,
+                                                        boolean b) {
+                        youtubePLayer.cueVideo(videoId);
+                    }
 
-        @Override
-            public void onInitializationFailure(YouTubePlayer.Provider provider,
-                                                YouTubeInitializationResult
-                                                        youTubeInitializationResult) {
-            //log the error
-            Log.e("MovieTrailerActivity", "Error initializing YouTube player");
-        }
-        });
+                    @Override
+                    public void onInitializationFailure(YouTubePlayer.Provider provider,
+                                                        YouTubeInitializationResult
+                                                                youTubeInitializationResult) {
+                        //log the error
+                        Log.e("MovieTrailerActivity", "Error initializing YouTube player");
+                    }
+                });
 
     }
 }
