@@ -24,7 +24,7 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-* [ ] List anything else that you can get done to improve the app functionality!
+* [x] Included a button to allow user to access the AMC Theatres website to order tickets.
 
 ## GIF Walkthrough
 

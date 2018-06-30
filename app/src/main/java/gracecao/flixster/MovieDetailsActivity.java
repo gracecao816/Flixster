@@ -89,11 +89,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
         getYoutubeTrailer();
     }
 
+    //function that allows user to go to the AMC website to buy tickets
     public void goToUrlAmc(String url) {
         Uri uriUrl = Uri.parse(url);
         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
         startActivity(launchBrowser);
     }
+
     //get the list of currently playing movies
     private void getYoutubeTrailer() {
         //create the url
